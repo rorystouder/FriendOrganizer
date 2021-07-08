@@ -1,5 +1,6 @@
 ﻿using FriendOrganizer.Model;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace FriendORganizer.DataAccess
