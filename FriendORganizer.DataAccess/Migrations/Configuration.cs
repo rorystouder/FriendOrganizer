@@ -18,10 +18,10 @@
             context.Friends.AddOrUpdate(
                 f => f.FirstName,
                 new Friend { FirstName = "Rory", LastName = "Stouder" },
-                new Friend { FirstName = "Randy", LastName = "Stouder" },
-                new Friend { FirstName = "Jane", LastName = "Stouder" },
-                new Friend { FirstName = "Nick", LastName = "Stouder" },
-                new Friend { FirstName = "Scott", LastName = "Stouder" }
+                new Friend { FirstName = "Bruce", LastName = "Wayne" },
+                new Friend { FirstName = "Peter", LastName = "Parker" },
+                new Friend { FirstName = "Tony", LastName = "Stark" },
+                new Friend { FirstName = "Thor", LastName = "Odenson" }
                 );
         }
     }
