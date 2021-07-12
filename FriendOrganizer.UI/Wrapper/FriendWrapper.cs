@@ -26,6 +26,21 @@ namespace FriendOrganizer.UI.Wrapper
             {
                 Model.FirstName = value;
                 OnPropertyChanged();
+                ValidateProperty(nameof(FirstName));
+            }
+        }
+
+        private void ValidateProperty(string propertyName)
+        {
+            ClearErrors(propertyName);
+            switch (propertyName)
+            {
+                case nameof(FirstName):
+                    if(string.Equals(FirstName, "Robot", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AddError(propertyName, "Robots are not vaild friends!");
+                    }
+                    break;
             }
         }
 
