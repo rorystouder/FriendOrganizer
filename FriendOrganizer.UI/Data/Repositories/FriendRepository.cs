@@ -16,6 +16,12 @@ namespace FriendOrganizer.UI.Data.Respositories
         {
             _context = context;
         }
+
+        public void Add(Friend friend)
+        {
+            _context.Friends.Add(friend);
+        }
+
         public async Task<Friend> GetByIDAsync(int friendId)
         {
             return await _context.Friends.SingleAsync(f => f.Id == friendId);
