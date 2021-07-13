@@ -1,61 +1,45 @@
 ﻿using FriendOrganizer.Model;
 using System;
+using System.Collections.Generic;
 
 namespace FriendOrganizer.UI.Wrapper
 {
-    public class FriendWrapper : NotifyDataErrorInfoBase
+    public class FriendWrapper : ModelWrapper<Friend>
     {
-        public FriendWrapper(Friend model)
-        {
-            Model = model;
+        public FriendWrapper(Friend model) : base(model)
+        {            
         }
-
-        public Friend Model { get; }
 
         public int Id {  get { return Model.Id; } }
 
         public string FirstName
         {
-            get { return Model.FirstName; }
-            set
-            {
-                Model.FirstName = value;
-                OnPropertyChanged();
-                ValidateProperty(nameof(FirstName));
-            }
-        }
-
-        private void ValidateProperty(string propertyName)
-        {
-            ClearErrors(propertyName);
-            switch (propertyName)
-            {
-                case nameof(FirstName):
-                    if(string.Equals(FirstName, "Robot", StringComparison.OrdinalIgnoreCase))
-                    {
-                        AddError(propertyName, "Robots are not vaild friends!");
-                    }
-                    break;
-            }
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
         }
 
         public string LastName
         {
-            get { return Model.LastName; }
-            set
-            {
-                Model.LastName = value;
-                OnPropertyChanged();
-            }
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
         }
 
         public string Email
         {
-            get { return Model.Email; }
-            set
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
+        protected override IEnumerable<string> ValidateProperty(string propertyName)
+        {
+            switch (propertyName)
             {
-                Model.LastName = value;
-                OnPropertyChanged();
+                case nameof(FirstName):
+                    if (string.Equals(FirstName, "Robot", StringComparison.OrdinalIgnoreCase))
+                    {
+                       yield return "Robots are not vaild friends!";
+                    }
+                    break;
             }
         }
     }
