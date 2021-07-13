@@ -1,11 +1,11 @@
 ﻿using FriendOrganizer.Model;
 using System.Threading.Tasks;
 
-namespace FriendOrganizer.UI.Data
+namespace FriendOrganizer.UI.Data.Respositories
 {
-    public interface IFriendDataService
+    public interface IFriendRepository
     {
         Task<Friend> GetByIDAsync(int friendId);
-        Task SaveAsync(Friend friend);
+        Task SaveAsync();
     }
 }
