@@ -25,8 +25,8 @@ namespace FriendOrganizer.UI.ViewModel
             _friendDetailViewModelCreator = friendDetailViewModelCreator;
             _messageDialogService = messageDialogService; // stores at the ready a message dialog service
 
-            _eventAggregator.GetEvent<OpenFriendDetailViewEvent>()
-               .Subscribe(OnOpenFriendDetailView); // open the detail view on the mainview
+            _eventAggregator.GetEvent<OpenDetailViewEvent>()
+               .Subscribe(OnOpenDetailView); // open the detail view on the mainview
             _eventAggregator.GetEvent<AfterFriendDeletedEvent>()
                 .Subscribe(AfterFriendDeleted); // Remove the detail view on the main
                                                 // view after friend object has been deleted
@@ -55,7 +55,7 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        private async void OnOpenFriendDetailView(int? friendId)
+        private async void OnOpenDetailView(OpenDetailViewEventArgs args)
         {
             // message dialog that alerts the user they havn't saved their changes
             if (DetailViewModel!=null && DetailViewModel.HasChanges)
@@ -66,13 +66,20 @@ namespace FriendOrganizer.UI.ViewModel
                     return;
                 }
             }
-            DetailViewModel = _friendDetailViewModelCreator();
-            await DetailViewModel.LoadAsync(friendId);
+
+            switch (args.ViewModelName)
+            {
+                case nameof(FriendDetailViewModel):
+                    DetailViewModel = _friendDetailViewModelCreator();
+                    break;
+            }
+            
+            await DetailViewModel.LoadAsync(args.Id);
         }
 
         private void OnCreateNewFriendExecute()
         {
-            OnOpenFriendDetailView(null);
+            OnOpenDetailView(null);
         }
 
         private void AfterFriendDeleted(int friendId)
