@@ -2,6 +2,7 @@
 using FriendOrganizer.UI.Data;
 using FriendOrganizer.UI.Data.Respositories;
 using FriendOrganizer.UI.Event;
+using FriendOrganizer.UI.View.Services;
 using FriendOrganizer.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
@@ -15,14 +16,17 @@ namespace FriendOrganizer.UI.ViewModel
     {
         private IFriendRepository _friendRepository;
         private IEventAggregator _eventAggregator;
+        private IMessageDialogService _messageDialogService;
         private FriendWrapper _friend;
         private bool _hasChanges;
 
         public FriendDetailViewModel(IFriendRepository friendRepository,
-            IEventAggregator eventAggregator)
+            IEventAggregator eventAggregator,
+            IMessageDialogService messageDialogService)
         {
             _friendRepository = friendRepository;
             _eventAggregator = eventAggregator;
+            _messageDialogService = messageDialogService;
 
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
@@ -43,10 +47,11 @@ namespace FriendOrganizer.UI.ViewModel
                 }
                 if (e.PropertyName == nameof(Friend.HasErrors))
                 {
+                    // change in friends name has been recorded
                     ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
                 }
             };
-
+            // new friend is created
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
             if (Friend.Id == 0)
             {
@@ -65,6 +70,7 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
+        // Check if Text has any changes to orginal
         public bool HasChanges
         {
             get { return _hasChanges; }
@@ -83,6 +89,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         public ICommand DeleteCommand { get; }
 
+        // Publishes Friend to database
         private async void OnSaveExecute()
         {
             await _friendRepository.SaveAsync();
@@ -96,18 +103,26 @@ namespace FriendOrganizer.UI.ViewModel
 
         }
 
+        // vaildates changes have been made, and text is not null
         private bool OnSaveCanExecute()
         {
             return Friend != null && !Friend.HasErrors && HasChanges;
         }
 
+        // Removes Friend obj from the Database
         private async void OnDeleteExecute()
         {
-            _friendRepository.Remove(Friend.Model);
-            await _friendRepository.SaveAsync();
+            var result = _messageDialogService.ShowOkCancelDialog($"Do you want to delete {Friend.FirstName} {Friend.LastName}?",
+                "Question");
+            if (result == MessageDialogResult.Ok)
+            {
+                _friendRepository.Remove(Friend.Model);
+                await _friendRepository.SaveAsync();
+                _eventAggregator.GetEvent<AfterFriendDeletedEvent>().Publish(Friend.Id);
+            }
         }
 
-
+        // Creates a new friend from entered text
         private Friend CreateNewFriend()
         {
             var friend = new Friend();
