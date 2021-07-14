@@ -47,6 +47,11 @@ namespace FriendOrganizer.UI.ViewModel
             };
 
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            if (Friend.Id == 0)
+            {
+                // Trigger the vaildation error for new friend
+                Friend.FirstName = "";
+            }
         }
 
         public FriendWrapper Friend
