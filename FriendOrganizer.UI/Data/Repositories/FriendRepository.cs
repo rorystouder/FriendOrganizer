@@ -1,9 +1,6 @@
 ﻿using FriendOrganizer.Model;
 using FriendORganizer.DataAccess;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data.Respositories
@@ -24,7 +21,9 @@ namespace FriendOrganizer.UI.Data.Respositories
 
         public async Task<Friend> GetByIDAsync(int friendId)
         {
-            return await _context.Friends.SingleAsync(f => f.Id == friendId);
+            return await _context.Friends
+                .Include(f => f.PhoneNumbers)
+                .SingleAsync(f => f.Id == friendId);
         }
 
         public bool HasChanges()
