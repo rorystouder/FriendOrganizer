@@ -23,12 +23,13 @@ namespace FriendOrganizer.UI.ViewModel
         {
             _eventAggregator = eventAggregator;
             _friendDetailViewModelCreator = friendDetailViewModelCreator;
-            _messageDialogService = messageDialogService;
+            _messageDialogService = messageDialogService; // stores at the ready a message dialog service
 
             _eventAggregator.GetEvent<OpenFriendDetailViewEvent>()
-               .Subscribe(OnOpenFriendDetailView);
+               .Subscribe(OnOpenFriendDetailView); // open the detail view on the mainview
             _eventAggregator.GetEvent<AfterFriendDeletedEvent>()
-                .Subscribe(AfterFriendDeleted);
+                .Subscribe(AfterFriendDeleted); // Remove the detail view on the main
+                                                // view after friend object has been deleted
 
             CreateNewFriendCommand = new DelegateCommand(OnCreateNewFriendExecute);
 
@@ -56,6 +57,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         private async void OnOpenFriendDetailView(int? friendId)
         {
+            // message dialog that alerts the user they havn't saved their changes
             if (FriendDetailViewModel!=null && FriendDetailViewModel.HasChanges)
             {
                 var result = _messageDialogService.ShowOkCancelDialog("You've made changes. Do you want to navigate away without Saving?", "Question");

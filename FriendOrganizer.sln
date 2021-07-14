@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendOrganizer.UI", "FriendOrganizer.UI\FriendOrganizer.UI.csproj", "{C6F00994-9C57-4485-B65C-DD1C0C073CE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendORganizer.DataAccess", "FriendORganizer.DataAccess\FriendORganizer.DataAccess.csproj", "{49FEF05B-BE95-442E-A8DC-4BE4323747EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendOrganizer.DataAccess", "FriendORganizer.DataAccess\FriendOrganizer.DataAccess.csproj", "{49FEF05B-BE95-442E-A8DC-4BE4323747EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendOrganizer.Model", "FriendOrganizer.Model\FriendOrganizer.Model.csproj", "{ABE585FE-462D-49C7-8295-D2757058D476}"
 EndProject
