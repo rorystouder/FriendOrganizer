@@ -93,6 +93,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\Repositories\GenericRepository.cs" />
+    <Compile Include="Data\Repositories\IGenericRepository.cs" />
     <Compile Include="Event\AfterDetailDeletedEvent.cs" />
     <Compile Include="Data\Lookups\IFriendLookupDataService.cs" />
     <Compile Include="Data\Lookups\IProgrammingLanguageLookupDataService.cs" />

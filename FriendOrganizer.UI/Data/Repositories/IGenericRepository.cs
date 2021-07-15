@@ -1,0 +1,13 @@
+﻿using System.Threading.Tasks;
+
+namespace FriendOrganizer.UI.Data.Respositories
+{
+    public interface IGenericRepository<T>
+    {
+        Task<T> GetByIDAsync(int id);
+        Task SaveAsync();
+        bool HasChanges();
+        void Add(T model);
+        void Remove(T model);
+    }
+}
