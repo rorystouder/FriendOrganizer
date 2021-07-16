@@ -1,53 +1,56 @@
+using FriendOrganizer.Model;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity.Migrations;
+using System.Linq;
+
 namespace FriendOrganizer.DataAccess.Migrations
 {
-  using FriendOrganizer.Model;
-  using System;
-  using System.Collections.Generic;
-  using System.Data.Entity;
-  using System.Data.Entity.Migrations;
-  using System.Linq;
-
-  internal sealed class Configuration : DbMigrationsConfiguration<FriendOrganizer.DataAccess.FriendOrganizerDbContext>
-  {
-    public Configuration()
+    internal sealed class Configuration : DbMigrationsConfiguration<FriendOrganizerDbContext>
     {
-      AutomaticMigrationsEnabled = false;
-    }
-
-    protected override void Seed(FriendOrganizer.DataAccess.FriendOrganizerDbContext context)
-    {
-      context.Friends.AddOrUpdate(
-        f => f.FirstName,
-        new Friend { FirstName = "Thomas", LastName = "Huber" },
-        new Friend { FirstName = "Urs", LastName = "Meier" },
-        new Friend { FirstName = "Erkan", LastName = "Egin" },
-        new Friend { FirstName = "Sara", LastName = "Huber" }
-        );
-      context.ProgrammingLanguages.AddOrUpdate(
-        pl => pl.Name,
-        new ProgrammingLanguage { Name = "C#" },
-        new ProgrammingLanguage { Name = "TypeScript" },
-        new ProgrammingLanguage { Name = "F#" },
-        new ProgrammingLanguage { Name = "Swift" },
-        new ProgrammingLanguage { Name = "Java" });
-
-      context.SaveChanges();
-
-      context.FriendPhoneNumbers.AddOrUpdate(pn => pn.Number,
-        new FriendPhoneNumber { Number = "+49 12345678", FriendId = context.Friends.First().Id });
-
-      context.Meetings.AddOrUpdate(m => m.Title,
-        new Meeting
+        public Configuration()
         {
-          Title = "Watching Soccer",
-          DateFrom = new DateTime(2018, 5, 26),
-          DateTo = new DateTime(2018, 5, 26),
-          Friends = new List<Friend>
-          {
-            context.Friends.Single(f => f.FirstName == "Thomas" && f.LastName == "Huber"),
-            context.Friends.Single(f => f.FirstName == "Urs" && f.LastName == "Meier")
-          }
-        });
+            AutomaticMigrationsEnabled = false;
+        }
+
+        protected override void Seed(FriendOrganizerDbContext context)
+        {
+            context.Friends.AddOrUpdate(
+              f => f.FirstName,
+              new Friend { FirstName = "Rory", LastName = "Stouder" },
+              new Friend { FirstName = "Bruce", LastName = "Wayne" },
+              new Friend { FirstName = "Peter", LastName = "Parker" },
+              new Friend { FirstName = "Tony", LastName = "Stark" },
+              new Friend { FirstName = "Thor", LastName = "Odenson" }
+              );
+            context.ProgrammingLanguages.AddOrUpdate(
+              pl => pl.Name,
+              new ProgrammingLanguage { Name = "C#" },
+              new ProgrammingLanguage { Name = "XAML" },
+              new ProgrammingLanguage { Name = "HTML5" },
+              new ProgrammingLanguage { Name = "Python" },
+              new ProgrammingLanguage { Name = "Solidity" },
+              new ProgrammingLanguage { Name = "Cobalt" },
+              new ProgrammingLanguage { Name = "Java" },
+              new ProgrammingLanguage { Name = "JavaScript" });
+
+            context.SaveChanges();
+
+            context.FriendPhoneNumbers.AddOrUpdate(pn => pn.Number,
+              new FriendPhoneNumber { Number = "+1 5742693154", FriendId = context.Friends.First().Id });
+
+            context.Meetings.AddOrUpdate(m => m.Title,
+              new Meeting
+              {
+                  Title = "Datto Agent Install",
+                  DateFrom = new DateTime(2021, 7, 21),
+                  DateTo = new DateTime(2021, 7, 21),
+                  Friends = new List<Friend>
+                {
+            context.Friends.Single(f => f.FirstName == "Rory" && f.LastName == "Stouder"),
+            context.Friends.Single(f => f.FirstName == "Thor" && f.LastName == "Odenson")
+                }
+              });
+        }
     }
-  }
 }

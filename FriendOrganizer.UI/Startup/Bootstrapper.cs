@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using FriendOrganizer.DataAccess;
-using FriendOrganizer.UI.Data;
 using FriendOrganizer.UI.Data.Lookups;
 using FriendOrganizer.UI.Data.Repositories;
 using FriendOrganizer.UI.View.Services;
@@ -9,32 +8,32 @@ using Prism.Events;
 
 namespace FriendOrganizer.UI.Startup
 {
-  public class Bootstrapper
-  {
-    public IContainer Bootstrap()
+    public class Bootstrapper
     {
-      var builder = new ContainerBuilder();
+        public IContainer Bootstrap()
+        {
+            ContainerBuilder builder = new ContainerBuilder();
 
-      builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
+            _ = builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
 
-      builder.RegisterType<FriendOrganizerDbContext>().AsSelf();
+            _ = builder.RegisterType<FriendOrganizerDbContext>().AsSelf();
 
-      builder.RegisterType<MainWindow>().AsSelf();
+            _ = builder.RegisterType<MainWindow>().AsSelf();
 
-      builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
+            _ = builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
 
-      builder.RegisterType<MainViewModel>().AsSelf();
-      builder.RegisterType<NavigationViewModel>().As<INavigationViewModel>();
-      builder.RegisterType<FriendDetailViewModel>()
-        .Keyed<IDetailViewModel>(nameof(FriendDetailViewModel));
-      builder.RegisterType<MeetingDetailViewModel>()
-        .Keyed<IDetailViewModel>(nameof(MeetingDetailViewModel));
+            _ = builder.RegisterType<MainViewModel>().AsSelf();
+            _ = builder.RegisterType<NavigationViewModel>().As<INavigationViewModel>();
+            _ = builder.RegisterType<FriendDetailViewModel>()
+              .Keyed<IDetailViewModel>(nameof(FriendDetailViewModel));
+            _ = builder.RegisterType<MeetingDetailViewModel>()
+              .Keyed<IDetailViewModel>(nameof(MeetingDetailViewModel));
 
-      builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
-      builder.RegisterType<FriendRespository>().As<IFriendRepository>();
-      builder.RegisterType<MeetingRepository>().As<IMeetingRepository>();
+            _ = builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
+            _ = builder.RegisterType<FriendRespository>().As<IFriendRepository>();
+            _ = builder.RegisterType<MeetingRepository>().As<IMeetingRepository>();
 
-      return builder.Build();
+            return builder.Build();
+        }
     }
-  }
 }

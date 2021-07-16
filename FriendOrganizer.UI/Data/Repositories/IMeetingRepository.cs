@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-using FriendOrganizer.Model;
+﻿using FriendOrganizer.Model;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {
-  public interface IMeetingRepository:IGenericRepository<Meeting>
-  {
-  }
+    public interface IMeetingRepository : IGenericRepository<Meeting>
+    {
+    }
 }
