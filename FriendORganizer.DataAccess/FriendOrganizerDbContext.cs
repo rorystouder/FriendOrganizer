@@ -2,7 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
-namespace FriendORganizer.DataAccess
+namespace FriendOrganizer.DataAccess
 {
     public class FriendOrganizerDbContext:DbContext
     {
