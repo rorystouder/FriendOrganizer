@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Threading.Tasks;
 
-namespace FriendOrganizer.UI.Data.Respositories
+namespace FriendOrganizer.UI.Data.Repositories
 {
     public class GenericRepository<TEntity, TContext> : IGenericRepository<TEntity>
         where TEntity:class
@@ -21,7 +21,7 @@ namespace FriendOrganizer.UI.Data.Respositories
         public virtual async Task<TEntity> GetByIDAsync(int id)
         {
             return await Context.Set<TEntity>().FindAsync(id);
-;        }
+        }
 
         public bool HasChanges()
         {

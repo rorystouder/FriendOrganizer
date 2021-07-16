@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace FriendOrganizer.UI.Data.Respositories
+namespace FriendOrganizer.UI.Data.Repositories
 {
     public interface IGenericRepository<T>
     {

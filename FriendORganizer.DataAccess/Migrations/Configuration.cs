@@ -1,17 +1,19 @@
 ﻿using FriendOrganizer.Model;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 
-namespace FriendORganizer.DataAccess.Migrations
+namespace FriendOrganizer.DataAccess.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<FriendORganizer.DataAccess.FriendOrganizerDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<FriendOrganizer.DataAccess.FriendOrganizerDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(FriendORganizer.DataAccess.FriendOrganizerDbContext context)
+        protected override void Seed(FriendOrganizer.DataAccess.FriendOrganizerDbContext context)
         {
             context.Friends.AddOrUpdate(
                 f => f.FirstName,
@@ -36,6 +38,19 @@ namespace FriendORganizer.DataAccess.Migrations
 
             context.FriendPhoneNumbers.AddOrUpdate(pn => pn.Number,
                 new FriendPhoneNumber { Number = "+1 5742693154", FriendId = context.Friends.First().Id });
+
+            context.Meetings.AddOrUpdate(m => m.Title,
+                new Meeting
+                {
+                    Title = "Datto Agent Install",
+                    DateFrom = new DateTime(2021, 7, 21),
+                    DateTo = new DateTime(2021, 7, 21),
+                    Friends = new List<Friend>
+                    {
+                        context.Friends.Single(f => f.FirstName == "Rory" && f.LastName == "Stouder"),
+                        context.Friends.Single(f => f.FirstName == "Thor" && f.LastName == "Odenson")
+                    }
+                });
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using FriendOrganizer.Model;
-using FriendORganizer.DataAccess;
+using FriendOrganizer.DataAccess;
 using System.Data.Entity;
 using System.Threading.Tasks;
 
-namespace FriendOrganizer.UI.Data.Respositories
+namespace FriendOrganizer.UI.Data.Repositories
 {
     public class FriendRepository : GenericRepository<Friend,FriendOrganizerDbContext>,
         IFriendRepository
