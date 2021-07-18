@@ -21,8 +21,8 @@ namespace FriendOrganizer.UI.ViewModel
             _friendLookupService = friendLookupService;
             _meetingLookupService = meetingLookupService;
             _eventAggregator = eventAggregator;
-            Friends = new ObservableCollection<NavigationItemViewModel>();
-            Meetings = new ObservableCollection<NavigationItemViewModel>();
+            Friends = new System.Collections.ObjectModel.ObservableCollection<NavigationItemViewModel>();
+            Meetings = new System.Collections.ObjectModel.ObservableCollection<NavigationItemViewModel>();
             _ = _eventAggregator.GetEvent<AfterDetailSavedEvent>().Subscribe(AfterDetailSaved);
             _ = _eventAggregator.GetEvent<AfterDetailDeletedEvent>().Subscribe(AfterDetailDeleted);
         }
@@ -47,9 +47,9 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        public ObservableCollection<NavigationItemViewModel> Friends { get; }
+        public System.Collections.ObjectModel.ObservableCollection<NavigationItemViewModel> Friends { get; }
 
-        public ObservableCollection<NavigationItemViewModel> Meetings { get; }
+        public System.Collections.ObjectModel.ObservableCollection<NavigationItemViewModel> Meetings { get; }
 
         private void AfterDetailDeleted(AfterDetailDeletedEventArgs args)
         {
@@ -66,7 +66,7 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        private void AfterDetailDeleted(ObservableCollection<NavigationItemViewModel> items,
+        private void AfterDetailDeleted(System.Collections.ObjectModel.ObservableCollection<NavigationItemViewModel> items,
           AfterDetailDeletedEventArgs args)
         {
             NavigationItemViewModel item = items.SingleOrDefault(f => f.Id == args.Id);
@@ -91,7 +91,7 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        private void AfterDetailSaved(ObservableCollection<NavigationItemViewModel> items,
+        private void AfterDetailSaved(System.Collections.ObjectModel.ObservableCollection<NavigationItemViewModel> items,
           AfterDetailSavedEventArgs args)
         {
             NavigationItemViewModel lookupItem = items.SingleOrDefault(l => l.Id == args.Id);

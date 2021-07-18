@@ -36,8 +36,8 @@ namespace FriendOrganizer.UI.ViewModel
             AddPhoneNumberCommand = new DelegateCommand(OnAddPhoneNumberExecute);
             RemovePhoneNumberCommand = new DelegateCommand(OnRemovePhoneNumberExecute, OnRemovePhoneNumberCanExecute);
 
-            ProgrammingLanguages = new ObservableCollection<LookupItem>();
-            PhoneNumbers = new ObservableCollection<FriendPhoneNumberWrapper>();
+            ProgrammingLanguages = new System.Collections.ObjectModel.ObservableCollection<LookupItem>();
+            PhoneNumbers = new System.Collections.ObjectModel.ObservableCollection<FriendPhoneNumberWrapper>();
         }
 
         public override async Task LoadAsync(int? friendId)
@@ -138,9 +138,9 @@ namespace FriendOrganizer.UI.ViewModel
 
         public ICommand RemovePhoneNumberCommand { get; }
 
-        public ObservableCollection<LookupItem> ProgrammingLanguages { get; }
+        public System.Collections.ObjectModel.ObservableCollection<LookupItem> ProgrammingLanguages { get; }
 
-        public ObservableCollection<FriendPhoneNumberWrapper> PhoneNumbers { get; }
+        public System.Collections.ObjectModel.ObservableCollection<FriendPhoneNumberWrapper> PhoneNumbers { get; }
 
         protected override async void OnSaveExecute()
         {
