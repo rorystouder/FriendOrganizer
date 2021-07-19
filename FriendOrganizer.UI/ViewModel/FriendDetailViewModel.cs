@@ -36,8 +36,8 @@ namespace FriendOrganizer.UI.ViewModel
             AddPhoneNumberCommand = new DelegateCommand(OnAddPhoneNumberExecute);
             RemovePhoneNumberCommand = new DelegateCommand(OnRemovePhoneNumberExecute, OnRemovePhoneNumberCanExecute);
 
-            ProgrammingLanguages = new System.Collections.ObjectModel.ObservableCollection<LookupItem>();
-            PhoneNumbers = new System.Collections.ObjectModel.ObservableCollection<FriendPhoneNumberWrapper>();
+            ProgrammingLanguages = new ObservableCollection<LookupItem>();
+            PhoneNumbers = new ObservableCollection<FriendPhoneNumberWrapper>();
         }
 
         public override async Task LoadAsync(int? friendId)
@@ -138,9 +138,9 @@ namespace FriendOrganizer.UI.ViewModel
 
         public ICommand RemovePhoneNumberCommand { get; }
 
-        public System.Collections.ObjectModel.ObservableCollection<LookupItem> ProgrammingLanguages { get; }
+        public ObservableCollection<LookupItem> ProgrammingLanguages { get; }
 
-        public System.Collections.ObjectModel.ObservableCollection<FriendPhoneNumberWrapper> PhoneNumbers { get; }
+        public ObservableCollection<FriendPhoneNumberWrapper> PhoneNumbers { get; }
 
         protected override async void OnSaveExecute()
         {
@@ -159,6 +159,12 @@ namespace FriendOrganizer.UI.ViewModel
 
         protected override async void OnDeleteExecute()
         {
+            if (await _friendRepository.HasMeetingAsync(Friend.Id))
+            {
+                _messageDialogService.ShowInfoDialog($"{Friend.FirstName} {Friend.LastName} can't be deleted, they are part of at least one meeting");
+                return;
+            }
+
             MessageDialogResult result = _messageDialogService.ShowOkCancelDialog($"Do you really want to delete the friend {Friend.FirstName} {Friend.LastName}?",
               "Question");
             if (result == MessageDialogResult.OK)
