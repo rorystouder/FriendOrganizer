@@ -81,7 +81,6 @@ namespace FriendOrganizer.UI.ViewModel
 
             InitializeMeeting(meeting);
 
-            // TODO: Load the Friend for the picklist
             _allFriends = await _meetingRepository.GetAllFriendsAsync();
 
             SetupPicklist();
@@ -165,7 +164,13 @@ namespace FriendOrganizer.UI.ViewModel
 
         private void OnRemoveFriendExecute()
         {
-            // TODO: Implement remove logic
+            Friend friendToRemove = SelectedAddedFriend;
+
+            Meeting.Model.Friends.Remove(friendToRemove);
+            AddedFriends.Remove(friendToRemove);
+            AvailableFriends.Add(friendToRemove);
+            HasChanges = _meetingRepository.HasChanges();
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
 
         private bool OnRemoveFriendCanExecute()
@@ -180,7 +185,13 @@ namespace FriendOrganizer.UI.ViewModel
 
         private void OnAddFriendExecute()
         {
-            // TODO: Implement add logic
+            Friend friendToAdd = SelectedAvailableFriend;
+
+            Meeting.Model.Friends.Add(friendToAdd);
+            AddedFriends.Add(friendToAdd);
+            AvailableFriends.Remove(friendToAdd);
+            HasChanges = _meetingRepository.HasChanges();
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
 }
