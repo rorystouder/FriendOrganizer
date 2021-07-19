@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace FriendOrganizer.UI.ViewModel
 {
@@ -68,6 +69,11 @@ namespace FriendOrganizer.UI.ViewModel
                 {
                     ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
                 }
+                if (e.PropertyName == nameof(Friend.FirstName)
+                || e.PropertyName == nameof(Friend.LastName))
+                {
+                    SetTitle();
+                }
             };
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
             if (Friend.Id == 0)
@@ -75,6 +81,12 @@ namespace FriendOrganizer.UI.ViewModel
                 // Little trick to trigger the validation
                 Friend.FirstName = "";
             }
+            SetTitle();
+        }
+
+        private void SetTitle()
+        {
+            Title = $"{Friend.FirstName} {Friend.LastName}";
         }
 
         private void InitializeFriendPhoneNumbers(ICollection<FriendPhoneNumber> phoneNumbers)
