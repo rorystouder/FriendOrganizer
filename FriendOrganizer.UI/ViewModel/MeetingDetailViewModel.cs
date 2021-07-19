@@ -6,6 +6,7 @@ using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -17,6 +18,7 @@ namespace FriendOrganizer.UI.ViewModel
         private readonly IMeetingRepository _meetingRepository;
         private MeetingWrapper _meeting;
         private readonly IMessageDialogService _messageDialogService;
+
         private Friend _selectedAvailableFriend;
         private Friend _selectedAddedFriend;
         private List<Friend> _allFriends;
@@ -51,7 +53,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         public Friend SelectedAvailableFriend
         {
-            get => _selectedAvailableFriend;
+            get { return _selectedAvailableFriend; }
             set
             {
                 _selectedAvailableFriend = value;
@@ -62,7 +64,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         public Friend SelectedAddedFriend
         {
-            get => _selectedAddedFriend;
+            get { return _selectedAddedFriend; }
             set
             {
                 _selectedAddedFriend = value;
