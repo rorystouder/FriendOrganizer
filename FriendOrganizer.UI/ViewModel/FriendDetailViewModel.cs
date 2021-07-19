@@ -20,7 +20,6 @@ namespace FriendOrganizer.UI.ViewModel
         private readonly IFriendRepository _friendRepository;
         private FriendWrapper _friend;
         private FriendPhoneNumberWrapper _selectedPhoneNumber;
-        //private bool _hasChanges;
         private readonly IMessageDialogService _messageDialogService;
         private readonly IProgrammingLanguageLookupDataService _programmingLanguageLookupDataService;
 
@@ -28,10 +27,9 @@ namespace FriendOrganizer.UI.ViewModel
           IEventAggregator eventAggregator,
           IMessageDialogService messageDialogService,
           IProgrammingLanguageLookupDataService programmingLanguageLookupDataService)
-          : base(eventAggregator)
+          : base(eventAggregator,messageDialogService)
         {
             _friendRepository = friendRepository;
-            _messageDialogService = messageDialogService;
             _programmingLanguageLookupDataService = programmingLanguageLookupDataService;
 
             AddPhoneNumberCommand = new DelegateCommand(OnAddPhoneNumberExecute);
@@ -176,11 +174,11 @@ namespace FriendOrganizer.UI.ViewModel
         {
             if (await _friendRepository.HasMeetingAsync(Friend.Id))
             {
-                _messageDialogService.ShowInfoDialog($"{Friend.FirstName} {Friend.LastName} can't be deleted, they are part of at least one meeting");
+                MessageDialogService.ShowInfoDialog($"{Friend.FirstName} {Friend.LastName} can't be deleted, they are part of at least one meeting");
                 return;
             }
 
-            MessageDialogResult result = _messageDialogService.ShowOkCancelDialog($"Do you really want to delete the friend {Friend.FirstName} {Friend.LastName}?",
+            MessageDialogResult result = MessageDialogService.ShowOkCancelDialog($"Do you really want to delete the friend {Friend.FirstName} {Friend.LastName}?",
               "Question");
             if (result == MessageDialogResult.OK)
             {
