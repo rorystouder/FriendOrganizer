@@ -4,7 +4,6 @@ using FriendOrganizer.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,11 +12,11 @@ namespace FriendOrganizer.UI.ViewModel
 {
     public class ProgrammingLanguageDetailViewModel : DetailViewModelBase
     {
-        private IProgrammingLanguageRepository _programmingLanguageRepository;
+        private readonly IProgrammingLanguageRepository _programmingLanguageRepository;
 
-        public ProgrammingLanguageDetailViewModel(IEventAggregator eventAggregator, 
+        public ProgrammingLanguageDetailViewModel(IEventAggregator eventAggregator,
             IMessageDialogService messageDialogService,
-            IProgrammingLanguageRepository programmingLanguageRepository) 
+            IProgrammingLanguageRepository programmingLanguageRepository)
             : base(eventAggregator, messageDialogService)
         {
             _programmingLanguageRepository = programmingLanguageRepository;
@@ -25,23 +24,23 @@ namespace FriendOrganizer.UI.ViewModel
             ProgrammingLanguages = new ObservableCollection<ProgrammingLanguageWrapper>();
         }
 
-        public async override Task LoadAsync(int id)
+        public override async Task LoadAsync(int id)
         {
-            
+
             Id = id;
-            
-            foreach(var wrapper in ProgrammingLanguages)
+
+            foreach (var wrapper in ProgrammingLanguages)
             {
                 wrapper.PropertyChanged -= Wrapper_PropertyChanged;
             }
 
             ProgrammingLanguages.Clear();
 
-            IEnumerable<Model.ProgrammingLanguage> languages = await _programmingLanguageRepository.GetAllAsync();
+            var languages = await _programmingLanguageRepository.GetAllAsync();
 
-            foreach(var model in languages)
+            foreach (var model in languages)
             {
-                ProgrammingLanguageWrapper wrapper = new ProgrammingLanguageWrapper(model);
+                var wrapper = new ProgrammingLanguageWrapper(model);
                 wrapper.PropertyChanged += Wrapper_PropertyChanged;
                 ProgrammingLanguages.Add(wrapper);
             }
@@ -71,7 +70,7 @@ namespace FriendOrganizer.UI.ViewModel
             return HasChanges && ProgrammingLanguages.All(p => !p.HasErrors);
         }
 
-        protected async override void OnSaveExecute()
+        protected override async void OnSaveExecute()
         {
             await _programmingLanguageRepository.SaveAsync();
             HasChanges = _programmingLanguageRepository.HasChanges();

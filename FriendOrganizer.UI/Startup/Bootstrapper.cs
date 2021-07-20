@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using FriendOrganizer.DataAccess;
+using FriendOrganizer.UI.Data;
 using FriendOrganizer.UI.Data.Lookups;
 using FriendOrganizer.UI.Data.Repositories;
 using FriendOrganizer.UI.View.Services;
@@ -8,36 +9,32 @@ using Prism.Events;
 
 namespace FriendOrganizer.UI.Startup
 {
-    public class Bootstrapper
+  public class Bootstrapper
+  {
+    public IContainer Bootstrap()
     {
-        public IContainer Bootstrap()
-        {
-            ContainerBuilder builder = new ContainerBuilder();
+      var builder = new ContainerBuilder();
 
-            _ = builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
+      builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
 
-            _ = builder.RegisterType<FriendOrganizerDbContext>().AsSelf();
+      builder.RegisterType<FriendOrganizerDbContext>().AsSelf();
 
-            _ = builder.RegisterType<MainWindow>().AsSelf();
+      builder.RegisterType<MainWindow>().AsSelf();
 
-            _ = builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
+      builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
 
-            _ = builder.RegisterType<MainViewModel>().AsSelf();
-            _ = builder.RegisterType<NavigationViewModel>().As<INavigationViewModel>();
-            _ = builder.RegisterType<FriendDetailViewModel>()
-              .Keyed<IDetailViewModel>(nameof(FriendDetailViewModel));
-            _ = builder.RegisterType<MeetingDetailViewModel>()
-              .Keyed<IDetailViewModel>(nameof(MeetingDetailViewModel));
-            _ = builder.RegisterType<ProgrammingLanguageDetailViewModel>()
-              .Keyed<IDetailViewModel>(nameof(ProgrammingLanguageDetailViewModel));
+      builder.RegisterType<MainViewModel>().AsSelf();
+      builder.RegisterType<NavigationViewModel>().As<INavigationViewModel>();
+      builder.RegisterType<FriendDetailViewModel>()
+        .Keyed<IDetailViewModel>(nameof(FriendDetailViewModel));
+      builder.RegisterType<MeetingDetailViewModel>()
+        .Keyed<IDetailViewModel>(nameof(MeetingDetailViewModel));
 
-            _ = builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
-            _ = builder.RegisterType<FriendRespository>().As<IFriendRepository>();
-            _ = builder.RegisterType<MeetingRepository>().As<IMeetingRepository>();
-            _ = builder.RegisterType<ProgrammingLanguageRepository>()
-                .As<IProgrammingLanguageRepository>();
+      builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
+      builder.RegisterType<FriendRespository>().As<IFriendRepository>();
+      builder.RegisterType<MeetingRepository>().As<IMeetingRepository>();
 
-            return builder.Build();
-        }
+      return builder.Build();
     }
+  }
 }
