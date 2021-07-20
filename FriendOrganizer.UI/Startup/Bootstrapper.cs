@@ -28,10 +28,14 @@ namespace FriendOrganizer.UI.Startup
               .Keyed<IDetailViewModel>(nameof(FriendDetailViewModel));
             _ = builder.RegisterType<MeetingDetailViewModel>()
               .Keyed<IDetailViewModel>(nameof(MeetingDetailViewModel));
+            _ = builder.RegisterType<ProgrammingLanguageDetailViewModel>()
+              .Keyed<IDetailViewModel>(nameof(ProgrammingLanguageDetailViewModel));
 
             _ = builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
             _ = builder.RegisterType<FriendRespository>().As<IFriendRepository>();
             _ = builder.RegisterType<MeetingRepository>().As<IMeetingRepository>();
+            _ = builder.RegisterType<ProgrammingLanguageRepository>()
+                .As<IProgrammingLanguageRepository>();
 
             return builder.Build();
         }
